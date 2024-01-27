@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+curlQuiet() {
+    curl -so /dev/null "$@"
+}
+
+main() {
+    readonly YOUTUBE_URL="https://www.youtube.com/c/SpencerLeeMeredith"
+    readonly CSV_FILE="health-data.csv"
+
+    # Get YouTube status and latency
+    read -r youtubeStatus youtubeLatency \
+        < <(curlQuiet -w '%{response_code} %{time_total}' "$YOUTUBE_URL")
+
+    # Current timestamp
+    timestamp=$(date +%s)
+
+    # Append to CSV
+    echo "$timestamp,$youtubeStatus,$youtubeLatency" >> "$CSV_FILE"
+}
+
+main
