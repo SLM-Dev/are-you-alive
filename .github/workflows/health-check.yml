@@ -17,6 +17,10 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
+
+      - name: Set execute permission for health-check script
+        run: chmod +x ./health-check
+
    
 
       - run: ./health-check >> health-data.csv
